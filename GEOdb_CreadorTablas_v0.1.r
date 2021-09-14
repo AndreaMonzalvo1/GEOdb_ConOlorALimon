@@ -40,4 +40,4 @@ print(args$Org)
 sqlfile <- file.path(args$pathSQLiteFile)
 geo_con <- dbConnect(SQLite(), sqlfile)
 
-#
+#Funcion de consulta
