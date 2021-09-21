@@ -40,4 +40,25 @@ print(args$Org)
 sqlfile <- file.path(args$pathSQLiteFile)
 geo_con <- dbConnect(SQLite(), sqlfile)
 
-#Funcion de consulta
+#Funcion de consulta GSE-GPL
+get_organism_GPL <- function(organism, geo_con){
+  gPlataforms <-dbGetQuery(geo_con,paste("SELECT gpl FROM gpl WHERE organism='",organism,"'",sep="")) #Checar lo del paste
+  gPlataforms <- as.vector(gPlataforms$gpl)
+  return(gPlataforms)
+}
+
+get_organism_GSEbyGPL <- function(organism, geo_con){
+  gPlataforms <- get_organism_GPL(organism, geo_con)
+  gPlataforms <- gPlataforms[1:20]
+  gSeries <- vector()
+  for (gpl in gPlataforms){
+    gse <- dbGetQuery(geo_con,paste("SELECT gse FROM gse_gpl WHERE gpl='",gpl,"'",sep=""))
+    gSeries <- rbind(gSeries, gse)}
+  gSeries <- gSeries$gse
+  return (gSeries)
+}
+
+get_sample_list <- function (gSeries, geo_con){
+  
+
+}
